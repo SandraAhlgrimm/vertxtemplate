@@ -64,7 +64,7 @@ public class HttpControllerVerticle extends Verticle {
                     });
 
                 } else {
-                    request.response().end("Start Load Tests: System is busy - please try again in some seconds!");
+                    request.response().end("Stop Deployment: System is busy - please try again in some seconds!");
                 }
                 startOnHold = true;
                 stopOnHold = false;
@@ -72,7 +72,7 @@ public class HttpControllerVerticle extends Verticle {
         });
 
         vertx.createHttpServer().requestHandler(routeMatcher).listen(8091, NetworkUtil.getMyIPAddress());
-        LOGGER.info("PerformanceTestStarter started, listening on port: 8091");
+        LOGGER.info("Workerverticle started, listening on port: 8091");
     }
 
     private void startTheConsumer(final HttpServerRequest request, final JsonObject json) {
