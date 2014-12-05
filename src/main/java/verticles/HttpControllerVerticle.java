@@ -47,13 +47,22 @@ public class HttpControllerVerticle extends Verticle {
 
         routeMatcher.get("/deploy/stop", new Handler<HttpServerRequest>() {
             @Override
-            public void handle(HttpServerRequest request) {
+            public void handle(final HttpServerRequest request) {
                 if (!stopOnHold) {
                     stopOnHold = false;
                     LOGGER.info(" ---> Try stopping " + ConnectWorkerVerticle.class.getSimpleName());
-                    container.undeployVerticle(deployIdKafkaConWorVer);
-                    startOnHold = false;
-                    consumerIsRunning = false;
+                    container.undeployVerticle(deployIdKafkaConWorVer, new AsyncResultHandler<Void>() {
+                        @Override
+                        public void handle(AsyncResult<Void> asyncResult) {
+                            if (asyncResult.succeeded()) {
+                                startOnHold = false;
+                                consumerIsRunning = false;
+                                LOGGER.info(ConnectWorkerVerticle.class.getSimpleName() + " has been undeployed.");
+                                request.response().end("Undeployed Worker Verticle!");
+                            }
+                        }
+                    });
+
                 } else {
                     request.response().end("Start Load Tests: System is busy - please try again in some seconds!");
                 }

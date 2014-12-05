@@ -25,11 +25,6 @@ public class ConnectWorkerVerticle extends Verticle {
         return this.getClass().getSimpleName();
     }
 
-    public void stop() {
-        System.out.println("Stopping KafkaWorkerVerticle");
-    }
-
-
     private class MessageHandler implements Handler<Message<JsonObject>> {
         @Override
         public void handle(Message<JsonObject> jsonObjectMessage) {
