@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+
+<log4j:configuration debug="true">
+
+    <appender name="fileErrorAppender" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="/srv/log/vertxtemplate_error.log"/>
+        <param name="Threshold" value="WARNING"/>
+        <param name="Append" value="true" />
+        <param name="MaxBackupIndex" value="50"/>
+        <param name="MaxFileSize" value="20MB"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%t] %c - %m%n"/>
+        </layout>
+    </appender>
+    <appender name="fileInfoAppender" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="/srv/log/vertxtemplate_info.log"/>
+        <param name="Threshold" value="ALL"/>
+        <param name="Append" value="true" />
+        <param name="MaxBackupIndex" value="50"/>
+        <param name="MaxFileSize" value="20MB"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%t] %c - %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="callbackLogEntry" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="/srv/log/vertxtemplate_callback.log"/>
+        <param name="Threshold" value="ALL"/>
+        <param name="Append" value="true" />
+        <param name="MaxBackupIndex" value="50"/>
+        <param name="MaxFileSize" value="20MB"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %m%n"/>
+        </layout>
+    </appender>
+
+    <category name="vertxtemplate" additivity="false">
+        <priority value="INFO" />
+        <appender-ref ref="fileInfoAppender"/>
+    </category>
+
+    <root>
+        <level value="ALL" />
+        <appender-ref ref="fileErrorAppender"/>
+    </root>
+
+</log4j:configuration>
