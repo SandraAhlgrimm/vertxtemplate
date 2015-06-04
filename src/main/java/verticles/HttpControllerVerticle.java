@@ -1,4 +1,10 @@
-package verticles; /**
+package verticles;
+
+
+/**
+ * Most important verticle.
+ * It contains a webserver to make this application controlable via HTTP Requests.
+ * <p/>
  * Created by sandra.kriemann on 28.11.2014.
  */
 
@@ -20,7 +26,7 @@ public class HttpControllerVerticle extends Verticle {
     EventBus eventBus;
     private boolean startOnHold = false;
     private boolean stopOnHold = false;
-    private boolean consumerIsRunning = false;
+    private boolean connectWorkerIsRunning = false;
     private String deployIdKafkaConWorVer;
 
 
@@ -56,7 +62,7 @@ public class HttpControllerVerticle extends Verticle {
                         public void handle(AsyncResult<Void> asyncResult) {
                             if (asyncResult.succeeded()) {
                                 startOnHold = false;
-                                consumerIsRunning = false;
+                                connectWorkerIsRunning = false;
                                 LOGGER.info(ConnectWorkerVerticle.class.getSimpleName() + " has been undeployed.");
                                 request.response().end("Undeployed Worker Verticle!");
                             }
@@ -76,7 +82,7 @@ public class HttpControllerVerticle extends Verticle {
     }
 
     private void startTheConsumer(final HttpServerRequest request, final JsonObject json) {
-        consumerIsRunning = true;
+        connectWorkerIsRunning = true;
         container.deployWorkerVerticle(ConnectWorkerVerticle.class.getName(), null, 1, false, new AsyncResultHandler<String>() {
             @Override
             public void handle(AsyncResult<String> asyncResult) {

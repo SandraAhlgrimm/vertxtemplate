@@ -9,6 +9,9 @@ import org.vertx.java.core.logging.impl.LoggerFactory;
 import org.vertx.java.platform.Verticle;
 
 /**
+ * Just simple stupid logic to demonstrate the progress.
+ * Gets called via the eventbus from the HttpRequestVerticle and logs "1234".
+ * <p/>
  * Created by sandra.kriemann on 28.11.2014.
  */
 public class ConnectWorkerVerticle extends Verticle {
